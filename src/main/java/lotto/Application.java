@@ -10,8 +10,9 @@ public class Application {
         AMOUNT = 1000;
 
         InputView inputView = new InputView(AMOUNT);
-        inputView.inputPurchaseAmount();
+        int purchaseAmount = inputView.inputPurchaseAmount();
 
+        inputView.inputWinningAndBonusNumbers();
 
     }
 }
