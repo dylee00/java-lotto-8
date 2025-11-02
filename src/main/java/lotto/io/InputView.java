@@ -25,7 +25,8 @@ public class InputView {
             if (purchaseAmount % amountWon != 0) {
                 throw new InvalidPurchaseAmountException(amountWon);
             }
-            return purchaseAmount;
+
+            return purchaseAmount/amountWon;
         }catch(Exception e){
             throw new InvalidPurchaseAmountException(amountWon);
         }
