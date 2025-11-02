@@ -1,8 +1,10 @@
-package lotto;
+package lotto.input;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
+import lotto.Application;
 import lotto.exception.ErrorMessage;
 
+import lotto.io.InputView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class InputViewTest extends NsTest {
+public class InputPurchaseAmountTest extends NsTest {
     private int amountWon;
     @BeforeEach
     void setUp() {
@@ -42,7 +44,8 @@ public class InputViewTest extends NsTest {
 
     @Override
     public void runMain() {
-        Application.main(new String[]{});
+        InputView inputView = new InputView(amountWon);
+        inputView.inputPurchaseAmount();
     }
 
 }
