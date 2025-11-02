@@ -3,7 +3,9 @@ package lotto.io;
 import camp.nextstep.edu.missionutils.Console;
 import lotto.WinningNumbers;
 import lotto.exception.ExceptionHandler;
-import lotto.exception.ioexception.InvalidNumberException;
+import lotto.exception.ioexception.DuplicateNumberException;
+import lotto.exception.ioexception.InvalidNumberRangeException;
+import lotto.exception.ioexception.InvalidNumberTypeException;
 import lotto.exception.ioexception.InvalidPurchaseAmountException;
 
 import java.util.ArrayList;
@@ -30,7 +32,7 @@ public class InputView {
             }
 
             return purchaseAmount/amountWon;
-        }catch(Exception e){
+        }catch(IllegalArgumentException e){
             throw new InvalidPurchaseAmountException(amountWon);
         }
     }
@@ -41,42 +43,57 @@ public class InputView {
         String winningLottoInput = Console.readLine();
 
         if(winningLottoInput.isEmpty() || !winningLottoInput.contains(defaultDelimiter)){
-            throw new InvalidNumberException();
+            throw new InvalidNumberTypeException();
         }
 
         List<String> winningLotto = Arrays.asList(winningLottoInput.split(defaultDelimiter));
 
         if(winningLotto.size() != 6) {
-            throw new InvalidNumberException();
+            throw new InvalidNumberTypeException();
         }
 
         List<Integer> lottoNumbers = new ArrayList<>();
 
         for(String winningLottoItem : winningLotto){
-            lottoNumbers.add(convertStringToInteger(winningLottoItem));
+            lottoNumbers.add(convertAndValidate(winningLottoItem));
+        }
+
+        long duplicateCount = lottoNumbers.stream().distinct().count();
+        if(duplicateCount != lottoNumbers.size()){
+            throw new DuplicateNumberException();
         }
 
         return lottoNumbers;
     }
 
-    public int readBonusNumber() {
+    public int readBonusNumber(List<Integer> winningNumbers) {
         System.out.println("보너스 번호를 입력해 주세요");
         String bonusLottoInput = Console.readLine();
 
         if(bonusLottoInput.isEmpty()){
-            throw new InvalidNumberException();
+            throw new InvalidNumberTypeException();
         }
 
-        return convertStringToInteger(bonusLottoInput);
+        int bonusNumber = convertAndValidate(bonusLottoInput);
+
+        if (winningNumbers.contains(bonusNumber)) {
+            throw new DuplicateNumberException();
+        }
+
+        return bonusNumber;
     }
 
-    public int convertStringToInteger(String winningLottoItem) {
+    public int convertAndValidate(String winningLottoItem) {
         try{
             int lottoNumber = Integer.parseInt(winningLottoItem);
 
+            if(lottoNumber > 45 || lottoNumber < 1){
+                throw new InvalidNumberRangeException();
+            }
             return lottoNumber;
-        }catch (Exception e){
-            throw new InvalidNumberException();
+
+        }catch (NumberFormatException e){
+            throw new InvalidNumberTypeException();
         }
     }
 
@@ -87,7 +104,7 @@ public class InputView {
     public WinningNumbers inputWinningAndBonusNumbers() {
         List<Integer> winningAndBonusNumbers = exceptionHandler.retry(this::readWinningNumbers);
 
-        int bonusNumber = exceptionHandler.retry(this::readBonusNumber);
+        int bonusNumber = exceptionHandler.retry(() -> readBonusNumber(winningAndBonusNumbers));
 
         return new WinningNumbers(winningAndBonusNumbers, bonusNumber);
     }
