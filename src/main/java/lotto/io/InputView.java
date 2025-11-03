@@ -1,7 +1,7 @@
 package lotto.io;
 
 import camp.nextstep.edu.missionutils.Console;
-import lotto.WinningNumbers;
+import lotto.WinningNumbersAndBonusNumber;
 import lotto.exception.ExceptionHandler;
 import lotto.exception.ioexception.DuplicateNumberException;
 import lotto.exception.ioexception.InvalidNumberRangeException;
@@ -101,12 +101,12 @@ public class InputView {
         return exceptionHandler.retry(this::readPurchaseAmount);
     }
 
-    public WinningNumbers inputWinningAndBonusNumbers() {
+    public WinningNumbersAndBonusNumber inputWinningAndBonusNumbers() {
         List<Integer> winningAndBonusNumbers = exceptionHandler.retry(this::readWinningNumbers);
 
         int bonusNumber = exceptionHandler.retry(() -> readBonusNumber(winningAndBonusNumbers));
 
-        return new WinningNumbers(winningAndBonusNumbers, bonusNumber);
+        return new WinningNumbersAndBonusNumber(winningAndBonusNumbers, bonusNumber);
     }
 
 

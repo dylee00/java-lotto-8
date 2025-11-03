@@ -21,6 +21,7 @@ public class LottoGenerator {
         }
     }
 
+    //outputView로 옮기기 -> List<Lotto> 를 argument로 받아 출력
     public void printLottos() {
         System.out.println(lottoCounts + "개를 구매했습니다.");
 

@@ -1,7 +1,11 @@
 package lotto;
 
+import lotto.calculatelotto.LottoCalculator;
+import lotto.generatelotto.Lotto;
 import lotto.generatelotto.LottoGenerator;
 import lotto.io.InputView;
+
+import java.util.List;
 
 public class Application {
     private static int AMOUNT = 1000;
@@ -13,9 +17,13 @@ public class Application {
 
         LottoGenerator lottoGenerator = new LottoGenerator(purchaseAmount);
 
+        List<Lotto> lottos = lottoGenerator.generateLottos();
+
         lottoGenerator.printLottos();
 
-        inputView.inputWinningAndBonusNumbers();
+        WinningNumbersAndBonusNumber winningNumbersAndBonusNumber = inputView.inputWinningAndBonusNumbers();
+
+        LottoCalculator lottoCalculator = new LottoCalculator(lottos,winningNumbersAndBonusNumber,purchaseAmount);
 
     }
 }
