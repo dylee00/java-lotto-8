@@ -21,17 +21,6 @@ public class LottoGenerator {
         }
     }
 
-    //outputView로 옮기기 -> List<Lotto> 를 argument로 받아 출력
-    public void printLottos() {
-        System.out.println(lottoCounts + "개를 구매했습니다.");
-
-        List<Lotto> lottos = generateLottos();
-
-        for (Lotto lotto : lottos) {
-            System.out.println(lotto);
-        }
-    }
-
     public List<Lotto> generateLottos() {
         List<Lotto> lottos = new ArrayList<>();
 
@@ -46,7 +35,7 @@ public class LottoGenerator {
     }
 
     public Lotto generateRandomNumbers() {
-        List<Integer> numbers = Randoms.pickUniqueNumbersInRange(1, 45, 6);
+        List<Integer> numbers = new ArrayList<>(Randoms.pickUniqueNumbersInRange(1, 45, 6));
 
         Collections.sort(numbers);
 
