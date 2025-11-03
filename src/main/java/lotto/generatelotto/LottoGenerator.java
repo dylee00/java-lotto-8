@@ -1,6 +1,7 @@
 package lotto.generatelotto;
 
 import camp.nextstep.edu.missionutils.Randoms;
+import lotto.exception.lotto.InvalidLottoCountsException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,10 +24,12 @@ public class LottoGenerator {
         }
     }
 
-
     public List<Lotto> generateLottos() {
         List<Lotto> lottos = new ArrayList<>();
 
+        if (lottoCounts <= 0) {
+            throw new InvalidLottoCountsException();
+        }
         for(int count = 1; count <= lottoCounts; count++) {
             lottos.add(generateRandomNumbers());
         }
