@@ -1,5 +1,6 @@
 package lotto.exception;
 
+import java.util.NoSuchElementException;
 import java.util.function.Supplier;
 
 public class ExceptionHandler {
@@ -9,7 +10,10 @@ public class ExceptionHandler {
         while (true) {
             try {
                 return callback.get();
-            }catch (Exception e) {
+            } catch (NoSuchElementException e) {
+                System.out.println(ERROR + e.getMessage());
+                throw e;
+            } catch (IllegalArgumentException e) {
                 System.out.println(ERROR + e.getMessage());
             }
         }
