@@ -6,7 +6,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LottoGeneratorTest {
+public class LottoGenerateSuccessTest {
     public static int purchaseAmount = 5;
     LottoGenerator lottoGenerator = new LottoGenerator(purchaseAmount);
     List<Lotto> lottos = lottoGenerator.generateLottos();

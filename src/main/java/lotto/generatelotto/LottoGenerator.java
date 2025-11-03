@@ -11,7 +11,14 @@ public class LottoGenerator {
     private final int lottoCounts;
 
     public LottoGenerator(int lottoCounts) {
+        validate(lottoCounts);
         this.lottoCounts = lottoCounts;
+    }
+
+    public void validate(int lottoCounts){
+        if (lottoCounts < 1) {
+            throw new InvalidLottoCountsException();
+        }
     }
 
     public void printLottos() {

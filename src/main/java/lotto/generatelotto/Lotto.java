@@ -1,5 +1,8 @@
 package lotto.generatelotto;
 
+import lotto.exception.ioexception.DuplicateNumberException;
+import lotto.exception.lotto.DuplicateLottoNumbersException;
+
 import java.util.List;
 
 public class Lotto {
@@ -13,6 +16,11 @@ public class Lotto {
     private void validate(List<Integer> numbers) {
         if (numbers.size() != 6) {
             throw new IllegalArgumentException("[ERROR] 로또 번호는 6개여야 합니다.");
+        }
+
+        long duplicateCount = numbers.stream().distinct().count();
+        if(duplicateCount != numbers.size()){
+            throw new DuplicateLottoNumbersException();
         }
     }
 
